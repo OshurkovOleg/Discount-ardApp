@@ -1,11 +1,15 @@
 package com.example.dicountcard.model;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "position_from_check")
 public class PositionFromCheck {
 
@@ -14,25 +18,20 @@ public class PositionFromCheck {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "check_id")
-    private long CheckID;
 
     @Column(name = "position_amount")
     private int positionAmount;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "check_number", referencedColumnName = "check_number")
+    private Check check;
+
+
     public PositionFromCheck() {
     }
 
-    public PositionFromCheck(long checkID, int positionAmount) {
-        CheckID = checkID;
+    public PositionFromCheck(int positionAmount, Check check) {
         this.positionAmount = positionAmount;
-    }
-
-    @Override
-    public String toString() {
-        return "PositionFromCheck{" +
-                "CheckID=" + CheckID +
-                ", positionAmount=" + positionAmount +
-                '}';
+        this.check = check;
     }
 }
