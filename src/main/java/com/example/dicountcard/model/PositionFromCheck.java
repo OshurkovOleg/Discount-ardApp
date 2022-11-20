@@ -20,7 +20,7 @@ public class PositionFromCheck {
 
 
     @Column(name = "position_amount")
-    private int positionAmount;
+    private long positionAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "check_number", referencedColumnName = "check_number")
@@ -30,7 +30,7 @@ public class PositionFromCheck {
     public PositionFromCheck() {
     }
 
-    public PositionFromCheck(int positionAmount, Check check) {
+    public PositionFromCheck(long positionAmount, Check check) {
         this.positionAmount = positionAmount;
         this.check = check;
     }

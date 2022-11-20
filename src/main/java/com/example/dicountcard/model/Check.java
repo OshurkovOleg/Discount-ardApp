@@ -23,10 +23,10 @@ public class Check {
     private long checkNumber;
 
     @Column(name = "number_card")
-    private int numberCard;
+    private long numberCard;
 
     @Column(name = "total")
-    private int total;
+    private long total;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
@@ -39,7 +39,7 @@ public class Check {
     public Check() {
     }
 
-    public Check(long checkID, int numberCard, int total) {
+    public Check(long checkID, long numberCard, long total) {
         this.checkNumber = checkID;
         this.numberCard = numberCard;
         this.total = total;

@@ -20,10 +20,10 @@ public class Client {
     private long id;
 
     @Column(name = "number_card", length = 20)
-    private int numberCard;
+    private long numberCard;
 
     @Column(name = "balance_card")
-    private int balanceCard;
+    private long balanceCard;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     private List<Check> checks;
@@ -31,7 +31,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(int numberCard, int balanceCard) {
+    public Client(long numberCard, long balanceCard) {
         this.numberCard = numberCard;
         this.balanceCard = balanceCard;
     }
