@@ -5,6 +5,7 @@ import com.example.dicountcard.repository.ClientRepository;
 import com.example.dicountcard.util.CardNumberValueInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,13 +31,14 @@ public class ClientService {
             throw new CardNumberValueInvalidException(CHECKING_THE_CARD_IN_THE_CLIENT_SERVICE);
         }
 
-        if (clientRepository.getClientByNumberCard(card) == null) {
+        if (clientRepository.getClientByCardNumber(card) == null) {
             clientRepository.save(new Client(card, 0));
         }
 
-        return clientRepository.getClientByNumberCard(card);
+        return clientRepository.getClientByCardNumber(card);
     }
 
+    @Transactional
     public void save(long card) {
         clientRepository.save(new Client(card, 0));
     }

@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -12,18 +13,18 @@ import java.util.List;
 @DynamicInsert
 @DynamicUpdate
 @Table
-public class Client {
+public class Client implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "number_card", length = 20)
-    private long numberCard;
+    @Column(name = "card_number", length = 20)
+    private long cardNumber;
 
-    @Column(name = "balance_card")
-    private long balanceCard;
+    @Column(name = "card_balance")
+    private long cardBalance;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     private List<Check> checks;
@@ -31,16 +32,16 @@ public class Client {
     public Client() {
     }
 
-    public Client(long numberCard, long balanceCard) {
-        this.numberCard = numberCard;
-        this.balanceCard = balanceCard;
+    public Client(long numberCard, long cardBalance) {
+        this.cardNumber = numberCard;
+        this.cardBalance = cardBalance;
     }
 
     @Override
     public String toString() {
         return "Client{" +
-                "numberCard=" + numberCard +
-                ", balanceCard=" + balanceCard +
+                "numberCard=" + cardNumber +
+                ", balanceCard=" + cardBalance +
                 '}';
     }
 }

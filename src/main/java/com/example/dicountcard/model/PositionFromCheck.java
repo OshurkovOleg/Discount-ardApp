@@ -10,14 +10,13 @@ import javax.persistence.*;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "position_from_check")
+@Table(name = "check_position")
 public class PositionFromCheck {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
 
     @Column(name = "position_amount")
     private long positionAmount;
@@ -33,5 +32,13 @@ public class PositionFromCheck {
     public PositionFromCheck(long positionAmount, Check check) {
         this.positionAmount = positionAmount;
         this.check = check;
+    }
+
+    @Override
+    public String toString() {
+        return "PositionFromCheck{" +
+                "positionAmount=" + positionAmount +
+                ", check=" + check +
+                '}';
     }
 }

@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Long> {
     public List<Client> getAllBy();
-
-    public Client getClientByNumberCard(long numberCard);
+    public Client getClientByCardNumber(long numberCard);
 }
