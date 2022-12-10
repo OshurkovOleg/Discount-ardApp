@@ -1,19 +1,21 @@
 package com.example.dicountcard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table
-public class Client implements Serializable {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,12 +27,9 @@ public class Client implements Serializable {
 
     @Column(name = "card_balance")
     private long cardBalance;
-
+    @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     private List<Check> checks;
-
-    public Client() {
-    }
 
     public Client(long numberCard, long cardBalance) {
         this.cardNumber = numberCard;
@@ -40,8 +39,9 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client{" +
-                "numberCard=" + cardNumber +
-                ", balanceCard=" + cardBalance +
+                "cardNumber=" + cardNumber +
+                ", cardBalance=" + cardBalance +
+                ", checks=" + checks +
                 '}';
     }
 }

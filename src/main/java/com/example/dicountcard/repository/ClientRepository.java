@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Long> {
-    public List<Client> getAllBy();
-    public Client getClientByCardNumber(long numberCard);
+    Client getClientByCardNumber(long numberCard);
 }

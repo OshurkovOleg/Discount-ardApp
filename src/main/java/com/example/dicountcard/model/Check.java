@@ -1,21 +1,23 @@
 package com.example.dicountcard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "client_check")
-public class Check implements Serializable {
+public class Check {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,15 +34,14 @@ public class Check implements Serializable {
     @Min(value = 1, message = "Total should not by less one")
     private long total;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "card_number", referencedColumnName = "card_number")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "check")
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "check")
     private List<PositionFromCheck> positionFromCheckList;
 
-    public Check() {
-    }
 
     public Check(long checkNumber, long total, Client client) {
         this.checkNumber = checkNumber;
@@ -50,6 +51,11 @@ public class Check implements Serializable {
 
     @Override
     public String toString() {
-        return "Check{" + "checkID=" + checkNumber + ", numberCard=" + ", total=" + total + '}';
+        return "Check{" +
+                "checkNumber=" + checkNumber +
+                ", total=" + total +
+                ", client=" + client +
+                ", positionFromCheckList=" + positionFromCheckList +
+                '}';
     }
 }

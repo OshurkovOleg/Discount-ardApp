@@ -1,4 +1,4 @@
-package com.example.dicountcard.util;
+package com.example.dicountcard.exceptions;
 
 import lombok.Data;
 

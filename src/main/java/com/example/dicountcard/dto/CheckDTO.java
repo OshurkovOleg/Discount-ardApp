@@ -2,31 +2,26 @@ package com.example.dicountcard.dto;
 
 import com.example.dicountcard.model.PositionFromCheck;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class CheckDTO {
 
-    @NotEmpty(message = "Number check should not by empty")
-    @Min(value = 1, message = "Number check should not by less one")
     private long checkNumber;
 
-    @NotEmpty(message = "Number card should not by empty")
-    @Min(value = 1, message = "Number card should not by less one")
     private long cardNumber;
 
-    @NotEmpty(message = "Total should not by empty")
-    @Min(value = 1, message = "Total should not by less one")
     private long total;
 
-    private List<PositionFromCheck> position;
+    private List<PositionFromCheck> listPosition;
 
-    public CheckDTO(long checkNumber, long cardNumber, long total) {
+    public CheckDTO(long checkNumber, long cardNumber, long total, List<PositionFromCheck> listPosition) {
         this.checkNumber = checkNumber;
         this.cardNumber = cardNumber;
         this.total = total;
+        this.listPosition = listPosition;
     }
 }

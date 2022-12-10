@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PositionFromCheckService {
 
-    PositionFromCheckRepository positionFromCheckRepository;
+    private final PositionFromCheckRepository positionFromCheckRepository;
 
     @Autowired
     public PositionFromCheckService(PositionFromCheckRepository positionFromCheckRepository) {

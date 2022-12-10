@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CheckRepository extends CrudRepository<Check, Long> {
 
-    Check getCheckByCheckNumber(long checkNumber);
-
 }
