@@ -5,6 +5,7 @@ import com.example.dicountcard.dto.CheckPackDTO;
 import com.example.dicountcard.dto.ClientDTO;
 import com.example.dicountcard.model.Check;
 import com.example.dicountcard.model.Client;
+import com.example.dicountcard.model.PositionFromCheck;
 import com.example.dicountcard.repository.CheckRepository;
 import com.example.dicountcard.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class CheckService {
     }
 
     public void save(CheckPackDTO checkPackDTO) {
+        clientMap.clear();
 
 // идем по списку входящих чеков
         for (CheckDTO checkDTO : checkPackDTO.getCheckList()) {
@@ -43,6 +45,24 @@ public class CheckService {
                 saveCheck(checkDTO, newClient);
             } else {
                 saveCheck(checkDTO, client);
+
+
+            }
+
+            // вычитаем баллы с баланса карты, если клиент использовал их при покупке
+            long saleDiscount = 0;
+            for (PositionFromCheck position : checkDTO.getListPosition()) {
+                saleDiscount += position.getPositionAmount();
+            }
+
+            long discount = saleDiscount - checkDTO.getTotal();
+            Client clientByCardNumber = clientRepository.getClientByCardNumber(checkDTO.getCardNumber());
+
+            if (discount != 0) {
+                long cardBalance = clientByCardNumber.getCardBalance();
+                long result = cardBalance - discount;
+                clientByCardNumber.setCardBalance(result);
+                clientRepository.save(clientByCardNumber);
             }
 
 //если в мапе клиентов нет номера карты, то добавляем номер карты и клиента со счётом (считаем сумму из всех чеков)
@@ -65,14 +85,18 @@ public class CheckService {
             long bill = entry.getValue().getBill();
 
             if (bill <= 50_000) {
-                client.setCardBalance(bill / 50);
+                long points = bill / 50;
+                client.setCardBalance(client.getCardBalance() + points);
             } else if (bill <= 100_000) {
-                client.setCardBalance(bill / 40);
+                long points = bill / 40;
+                client.setCardBalance(client.getCardBalance() + points);
             } else {
-                client.setCardBalance(bill / 30);
+                long points = bill / 30;
+                client.setCardBalance(client.getCardBalance() + points);
             }
 
             clientRepository.save(client);
+
         }
     }
 
