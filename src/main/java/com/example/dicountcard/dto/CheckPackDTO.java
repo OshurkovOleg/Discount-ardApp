@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class CheckPackDTO {
+
     public List<CheckDTO> checkList;
 
     public CheckPackDTO(List<CheckDTO> checkList) {

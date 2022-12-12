@@ -44,7 +44,6 @@ public class Check {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "check")
     private List<PositionFromCheck> positionFromCheckList;
 
-
     public Check(long checkNumber, long total, Client client) {
         this.checkNumber = checkNumber;
         this.total = total;
@@ -53,10 +52,11 @@ public class Check {
 
     @Override
     public String toString() {
-        return "Check{" + "checkNumber=" +
-                checkNumber + ", total=" +
-                total + ", client=" +
-                client + ", positionFromCheckList=" +
-                positionFromCheckList + '}';
+        return "Check{" +
+                "checkNumber=" + checkNumber +
+                ", total=" + total +
+                ", client=" + client +
+                ", positionFromCheckList=" + positionFromCheckList +
+                '}';
     }
 }

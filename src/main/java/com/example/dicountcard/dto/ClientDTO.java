@@ -12,17 +12,15 @@ public class ClientDTO {
     private long account;
     private long cardNumber;
 
-
     public ClientDTO(long bill, long cardNumber) {
         this.account = bill;
         this.cardNumber = cardNumber;
-
     }
 
     @Override
     public String toString() {
         return "ClientDTO{" +
-                "bill=" + account +
+                "account=" + account +
                 ", cardNumber=" + cardNumber +
                 '}';
     }

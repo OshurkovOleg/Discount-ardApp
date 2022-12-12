@@ -13,11 +13,8 @@ import java.util.List;
 public class CheckDTO {
 
     private long checkNumber;
-
     private long cardNumber;
-
     private long checkAmount;
-
     private List<PositionFromCheck> listPosition;
 
     public CheckDTO(long checkNumber, long cardNumber, long total, List<PositionFromCheck> listPosition) {
@@ -25,5 +22,15 @@ public class CheckDTO {
         this.cardNumber = cardNumber;
         this.checkAmount = total;
         this.listPosition = listPosition;
+    }
+
+    @Override
+    public String toString() {
+        return "CheckDTO{" +
+                "checkNumber=" + checkNumber +
+                ", cardNumber=" + cardNumber +
+                ", checkAmount=" + checkAmount +
+                ", listPosition=" + listPosition +
+                '}';
     }
 }

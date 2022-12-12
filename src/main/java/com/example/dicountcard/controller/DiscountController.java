@@ -45,7 +45,6 @@ public class DiscountController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
     @ExceptionHandler
     private ResponseEntity<ClientErrorResponse> handlerException(CheckNotCreatedException e) {
         ClientErrorResponse response = new ClientErrorResponse(e.getMessage());

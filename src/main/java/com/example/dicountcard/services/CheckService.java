@@ -60,6 +60,7 @@ public class CheckService {
         clientMap.clear();
     }
 
+    //    @Transactional
     private void writeOffPointsAccount(CheckDTO checkDTO, Client client) {
 
         long sumPositions = 0;
@@ -76,6 +77,7 @@ public class CheckService {
         }
     }
 
+    //    @Transactional
     private void putPointsOnAccount() {
 
         for (Map.Entry<Long, ClientDTO> entry : clientMap.entrySet()) {
@@ -99,10 +101,12 @@ public class CheckService {
         }
     }
 
+    //    @Transactional
     private Client saveAndGetClient(CheckDTO checkDTO) {
         return clientRepository.save(new Client(checkDTO.getCardNumber(), 0));
     }
 
+    //    @Transactional
     private void saveCheck(CheckDTO checkDTO, Client client) {
         Check newCheck = new Check(checkDTO.getCheckNumber(), checkDTO.getCheckAmount(), client);
         Check check = checkRepository.save(newCheck);
