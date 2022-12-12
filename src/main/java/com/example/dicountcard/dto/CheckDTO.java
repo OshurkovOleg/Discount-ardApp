@@ -2,11 +2,14 @@ package com.example.dicountcard.dto;
 
 import com.example.dicountcard.model.PositionFromCheck;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class CheckDTO {
 

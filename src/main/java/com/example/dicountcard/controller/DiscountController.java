@@ -1,6 +1,6 @@
 package com.example.dicountcard.controller;
 
-import com.example.dicountcard.dto.CheckDTO;
+import com.example.dicountcard.dto.CheckPackDTO;
 import com.example.dicountcard.exceptions.CardNotFoundException;
 import com.example.dicountcard.exceptions.CheckNotCreatedException;
 import com.example.dicountcard.exceptions.ClientErrorResponse;
@@ -40,8 +40,8 @@ public class DiscountController {
     }
 
     @PostMapping("/checks")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid CheckDTO checkDTO) {
-        checkService.save(checkDTO);
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid CheckPackDTO checkPackDTO) {
+        checkService.save(checkPackDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
