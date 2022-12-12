@@ -1,7 +1,6 @@
 package com.example.dicountcard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -54,11 +53,10 @@ public class Check {
 
     @Override
     public String toString() {
-        return "Check{" +
-                "checkNumber=" + checkNumber +
-                ", total=" + total +
-                ", client=" + client +
-                ", positionFromCheckList=" + positionFromCheckList +
-                '}';
+        return "Check{" + "checkNumber=" +
+                checkNumber + ", total=" +
+                total + ", client=" +
+                client + ", positionFromCheckList=" +
+                positionFromCheckList + '}';
     }
 }

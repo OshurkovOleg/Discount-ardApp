@@ -20,23 +20,19 @@ public class CheckService {
     private final CheckRepository checkRepository;
     private final ClientRepository clientRepository;
     private final PositionFromCheckService positionFromCheckService;
-
-    Map<Long, ClientDTO> clientMap = new HashMap<>();
+    private final Map<Long, ClientDTO> clientMap = new HashMap<>();
 
     @Autowired
-    public CheckService(CheckRepository checkRepository, ClientRepository clientRepository,
-                        PositionFromCheckService positionFromCheckService) {
+    public CheckService(CheckRepository checkRepository, ClientRepository clientRepository, PositionFromCheckService positionFromCheckService) {
         this.checkRepository = checkRepository;
         this.clientRepository = clientRepository;
         this.positionFromCheckService = positionFromCheckService;
     }
 
     public void save(CheckPackDTO checkPackDTO) {
-        clientMap.clear();
 
 // идем по списку входящих чеков
         for (CheckDTO checkDTO : checkPackDTO.getCheckList()) {
-
             Client client = clientRepository.getClientByCardNumber(checkDTO.getCardNumber());
 
 //проверяем есть ли клиент в базе, если нет, то добавляем и сохраняем чек - иначе просто сохраняем чек
@@ -45,58 +41,61 @@ public class CheckService {
                 saveCheck(checkDTO, newClient);
             } else {
                 saveCheck(checkDTO, client);
-
-
             }
 
-            // вычитаем баллы с баланса карты, если клиент использовал их при покупке
-            long saleDiscount = 0;
-            for (PositionFromCheck position : checkDTO.getListPosition()) {
-                saleDiscount += position.getPositionAmount();
-            }
-
-            long discount = saleDiscount - checkDTO.getTotal();
-            Client clientByCardNumber = clientRepository.getClientByCardNumber(checkDTO.getCardNumber());
-
-            if (discount != 0) {
-                long cardBalance = clientByCardNumber.getCardBalance();
-                long result = cardBalance - discount;
-                clientByCardNumber.setCardBalance(result);
-                clientRepository.save(clientByCardNumber);
-            }
+// вычитаем баллы с баланса карты, если клиент использовал их при покупке
+            writeOffPointsAccount(checkDTO, client);
 
 //если в мапе клиентов нет номера карты, то добавляем номер карты и клиента со счётом (считаем сумму из всех чеков)
             if (!clientMap.containsKey(checkDTO.getCardNumber())) {
-                clientMap.put(checkDTO.getCardNumber(), new ClientDTO(checkDTO.getTotal(), checkDTO.getCardNumber()));
+                clientMap.put(checkDTO.getCardNumber(), new ClientDTO(checkDTO.getCheckAmount(), checkDTO.getCardNumber()));
             } else {
-                long bill = clientMap.get(checkDTO.getCardNumber()).getBill();
-                clientMap.get(checkDTO.getCardNumber()).setBill(bill + checkDTO.getTotal());
+                long bill = clientMap.get(checkDTO.getCardNumber()).getAccount();
+                clientMap.get(checkDTO.getCardNumber()).setAccount(bill + checkDTO.getCheckAmount());
             }
         }
 
-//считаем количества баллов на основании суммы всех чеков
-        accumulatePoints();
-
+//считаем количества баллов на основании суммы всех чеков и сохраняем на балансе
+        putPointsOnAccount();
+        clientMap.clear();
     }
 
-    private void accumulatePoints() {
+    private void writeOffPointsAccount(CheckDTO checkDTO, Client client) {
+
+        long sumPositions = 0;
+
+        for (PositionFromCheck position : checkDTO.getListPosition()) {
+            sumPositions += position.getPositionAmount();
+        }
+
+        long points = sumPositions - checkDTO.getCheckAmount();
+        if (points != 0) {
+            long newBalanceValue = client.getCardBalance() - points;
+            client.setCardBalance(newBalanceValue);
+            clientRepository.save(client);
+        }
+    }
+
+    private void putPointsOnAccount() {
+
         for (Map.Entry<Long, ClientDTO> entry : clientMap.entrySet()) {
             Client client = clientRepository.getClientByCardNumber(entry.getKey());
-            long bill = entry.getValue().getBill();
 
-            if (bill <= 50_000) {
-                long points = bill / 50;
+            long account = entry.getValue().getAccount();
+            long points;
+
+            if (account <= 50_000) {
+                points = account / 50;
                 client.setCardBalance(client.getCardBalance() + points);
-            } else if (bill <= 100_000) {
-                long points = bill / 40;
+            } else if (account <= 100_000) {
+                points = account / 40;
                 client.setCardBalance(client.getCardBalance() + points);
             } else {
-                long points = bill / 30;
+                points = account / 30;
                 client.setCardBalance(client.getCardBalance() + points);
             }
 
             clientRepository.save(client);
-
         }
     }
 
@@ -105,12 +104,11 @@ public class CheckService {
     }
 
     private void saveCheck(CheckDTO checkDTO, Client client) {
-        Check check = checkRepository.save(new Check(checkDTO.getCheckNumber(), checkDTO.getTotal(),
-                client));
+        Check newCheck = new Check(checkDTO.getCheckNumber(), checkDTO.getCheckAmount(), client);
+        Check check = checkRepository.save(newCheck);
 
         checkDTO.getListPosition().stream()
                 .peek(e -> e.setCheck(check))
                 .forEach(positionFromCheckService::save);
     }
-
 }

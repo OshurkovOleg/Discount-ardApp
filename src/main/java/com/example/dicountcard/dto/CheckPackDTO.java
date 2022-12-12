@@ -1,7 +1,5 @@
 package com.example.dicountcard.dto;
 
-import com.example.dicountcard.model.Check;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

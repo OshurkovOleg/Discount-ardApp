@@ -1,7 +1,6 @@
 package com.example.dicountcard.dto;
 
 import com.example.dicountcard.model.PositionFromCheck;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,14 +16,14 @@ public class CheckDTO {
 
     private long cardNumber;
 
-    private long total;
+    private long checkAmount;
 
     private List<PositionFromCheck> listPosition;
 
     public CheckDTO(long checkNumber, long cardNumber, long total, List<PositionFromCheck> listPosition) {
         this.checkNumber = checkNumber;
         this.cardNumber = cardNumber;
-        this.total = total;
+        this.checkAmount = total;
         this.listPosition = listPosition;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.dicountcard.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +9,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClientDTO {
 
-    private long bill;
+    private long account;
     private long cardNumber;
 
 
     public ClientDTO(long bill, long cardNumber) {
-        this.bill = bill;
+        this.account = bill;
         this.cardNumber = cardNumber;
 
     }
@@ -23,7 +22,7 @@ public class ClientDTO {
     @Override
     public String toString() {
         return "ClientDTO{" +
-                "bill=" + bill +
+                "bill=" + account +
                 ", cardNumber=" + cardNumber +
                 '}';
     }
