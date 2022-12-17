@@ -1,4 +1,4 @@
-package com.example.dicountcard.model;
+package com.example.dicountcard.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,30 +15,30 @@ import javax.persistence.*;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "check_position")
-public class PositionFromCheck {
+public class PositionFromCheckEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "position_amount")
-    private long positionAmount;
+    @Column(name = "price")
+    private long price;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "check_id", referencedColumnName = "id")
-    private Check check;
+    private CheckEntity checkEntity;
 
-    public PositionFromCheck(long positionAmount, Check check) {
-        this.positionAmount = positionAmount;
-        this.check = check;
+    public PositionFromCheckEntity(long price, CheckEntity checkEntity) {
+        this.price = price;
+        this.checkEntity = checkEntity;
     }
 
     @Override
     public String toString() {
         return "PositionFromCheck{" +
-                "positionAmount=" + positionAmount +
-                ", check=" + check +
+                "positionAmount=" + price +
+                ", check=" + checkEntity +
                 '}';
     }
 }

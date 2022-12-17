@@ -1,6 +1,6 @@
 package com.example.dicountcard.services;
 
-import com.example.dicountcard.model.PositionFromCheck;
+import com.example.dicountcard.entities.PositionFromCheckEntity;
 import com.example.dicountcard.repository.PositionFromCheckRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class PositionFromCheckService {
         this.positionFromCheckRepository = positionFromCheckRepository;
     }
 
-    public void save(PositionFromCheck positionFromCheck) {
-        positionFromCheckRepository.save(positionFromCheck);
+    public void save(PositionFromCheckEntity positionFromCheckEntity) {
+        positionFromCheckRepository.save(positionFromCheckEntity);
     }
 
 }

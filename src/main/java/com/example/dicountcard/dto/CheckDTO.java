@@ -1,6 +1,7 @@
 package com.example.dicountcard.dto;
 
-import com.example.dicountcard.model.PositionFromCheck;
+import com.example.dicountcard.entities.PositionFromCheckEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,25 +13,26 @@ import java.util.List;
 @NoArgsConstructor
 public class CheckDTO {
 
-    private long checkNumber;
+    private long number;
     private long cardNumber;
-    private long checkAmount;
-    private List<PositionFromCheck> listPosition;
+    private long price;
+    private List<PositionFromCheckEntity> listPosition;
 
-    public CheckDTO(long checkNumber, long cardNumber, long total, List<PositionFromCheck> listPosition) {
-        this.checkNumber = checkNumber;
+    public CheckDTO(long number, long cardNumber, long price, List<PositionFromCheckEntity> listPosition) {
+        this.number = number;
         this.cardNumber = cardNumber;
-        this.checkAmount = total;
+        this.price = price;
         this.listPosition = listPosition;
     }
 
     @Override
     public String toString() {
         return "CheckDTO{" +
-                "checkNumber=" + checkNumber +
+                "checkNumber=" + number +
                 ", cardNumber=" + cardNumber +
-                ", checkAmount=" + checkAmount +
+                ", checkAmount=" + price +
                 ", listPosition=" + listPosition +
                 '}';
     }
+
 }

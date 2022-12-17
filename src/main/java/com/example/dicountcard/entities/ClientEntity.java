@@ -1,5 +1,6 @@
-package com.example.dicountcard.model;
+package com.example.dicountcard.entities;
 
+import com.example.dicountcard.dto.CheckDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table
-public class Client {
+@Table(name = "client")
+public class ClientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,13 +30,18 @@ public class Client {
 
     @Column(name = "card_balance")
     private long cardBalance;
-    @JsonBackReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
-    private List<Check> checks;
 
-    public Client(long numberCard, long cardBalance) {
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "clientEntity")
+    private List<CheckEntity> checkEntities;
+
+    public ClientEntity(long numberCard, long cardBalance) {
         this.cardNumber = numberCard;
         this.cardBalance = cardBalance;
+    }
+
+    public static ClientEntity getNewClientEntityUsingCardNumberFromCheckDTO(CheckDTO checkDTO) {
+        return new ClientEntity(checkDTO.getCardNumber(), 0);
     }
 
     @Override
@@ -43,7 +49,7 @@ public class Client {
         return "Client{" +
                 "cardNumber=" + cardNumber +
                 ", cardBalance=" + cardBalance +
-                ", checks=" + checks +
+                ", checks=" + checkEntities +
                 '}';
     }
 }

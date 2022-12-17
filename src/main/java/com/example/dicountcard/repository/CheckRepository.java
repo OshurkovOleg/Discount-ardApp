@@ -1,10 +1,10 @@
 package com.example.dicountcard.repository;
 
-import com.example.dicountcard.model.Check;
+import com.example.dicountcard.entities.CheckEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CheckRepository extends CrudRepository<Check, Long> {
+public interface CheckRepository extends CrudRepository<CheckEntity, Long> {
 
 }

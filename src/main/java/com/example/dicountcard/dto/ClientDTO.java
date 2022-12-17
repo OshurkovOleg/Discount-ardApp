@@ -1,26 +1,25 @@
 package com.example.dicountcard.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 public class ClientDTO {
 
-    private long account;
+    private long balance;
     private long cardNumber;
 
-    public ClientDTO(long bill, long cardNumber) {
-        this.account = bill;
+    public ClientDTO(long balance, long cardNumber) {
+        this.balance = balance;
         this.cardNumber = cardNumber;
     }
 
     @Override
     public String toString() {
         return "ClientDTO{" +
-                "account=" + account +
+                "account=" + balance +
                 ", cardNumber=" + cardNumber +
                 '}';
     }

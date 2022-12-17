@@ -1,7 +1,7 @@
 package com.example.dicountcard.services;
 
 import com.example.dicountcard.exceptions.CardNotFoundException;
-import com.example.dicountcard.model.Client;
+import com.example.dicountcard.entities.ClientEntity;
 import com.example.dicountcard.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +20,14 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public List<Client> getAll() {
-        ArrayList<Client> clients = new ArrayList<>();
+    public List<ClientEntity> getAll() {
+        ArrayList<ClientEntity> clientEntities = new ArrayList<>();
         clientRepository.findAll()
-                .forEach(clients::add);
-        return clients;
+                .forEach(clientEntities::add);
+        return clientEntities;
     }
 
-    public Client getByCardNumber(long card) {
+    public ClientEntity getByCardNumber(long card) {
 
         if (clientRepository.getClientByCardNumber(card) == null) {
             throw new CardNotFoundException("ClientService.get didn't exist");
@@ -37,7 +37,7 @@ public class ClientService {
 
     @Transactional
     public void save(long card) {
-        clientRepository.save(new Client(card, 0));
+        clientRepository.save(new ClientEntity(card, 0));
     }
 
 }

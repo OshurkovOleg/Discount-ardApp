@@ -1,6 +1,7 @@
-package com.example.dicountcard.model;
+package com.example.dicountcard.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,48 +16,50 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "client_check")
-public class Check {
+public class CheckEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "check_number")
+    @Column(name = "number")
     @NotEmpty(message = "Number check should not by empty")
     @Min(value = 1, message = "Number check should not by less one")
-    private long checkNumber;
+    private long number;
 
-    @Column(name = "total")
+    @Column(name = "price")
     @NotEmpty(message = "Total should not by empty")
     @Min(value = 1, message = "Total should not by less one")
-    private long total;
+    private long price;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
+    private ClientEntity clientEntity;
+
 
     @JsonBackReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "check")
-    private List<PositionFromCheck> positionFromCheckList;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "checkEntity")
+    private List<PositionFromCheckEntity> positionFromCheckEntityList;
 
-    public Check(long checkNumber, long total, Client client) {
-        this.checkNumber = checkNumber;
-        this.total = total;
-        this.client = client;
+    public CheckEntity(long number, long price, ClientEntity clientEntity) {
+        this.number = number;
+        this.price = price;
+        this.clientEntity = clientEntity;
     }
 
     @Override
     public String toString() {
         return "Check{" +
-                "checkNumber=" + checkNumber +
-                ", total=" + total +
-                ", client=" + client +
-                ", positionFromCheckList=" + positionFromCheckList +
+                "checkNumber=" + number +
+                ", total=" + price +
+                ", client=" + clientEntity +
+                ", positionFromCheckList=" + positionFromCheckEntityList +
                 '}';
     }
 }
