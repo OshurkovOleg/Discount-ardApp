@@ -1,0 +1,19 @@
+{
+  "checkList" :
+  [
+    {
+      "number" : 213,
+      "cardNumber" : 35454,
+      "price" : 1220,
+      "listPosition" :
+      [
+        {
+          "price" : 610
+        },
+        {
+          "price" : 610
+        }
+      ]
+    }
+  ]
+}

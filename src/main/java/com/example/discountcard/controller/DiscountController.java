@@ -2,9 +2,6 @@ package com.example.discountcard.controller;
 
 import com.example.discountcard.dto.CheckPackDTO;
 import com.example.discountcard.entities.ClientEntity;
-import com.example.discountcard.exceptions.CardNotFoundException;
-import com.example.discountcard.exceptions.CheckNotCreatedException;
-import com.example.discountcard.exceptions.ClientErrorResponse;
 import com.example.discountcard.services.CheckService;
 import com.example.discountcard.services.ClientService;
 import io.swagger.annotations.Api;
@@ -45,21 +42,9 @@ public class DiscountController {
 
     @PostMapping("/checks")
     @ApiOperation("Сохранение входящего чека в БД")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid CheckPackDTO checkPackDTO) {
+    public ResponseEntity<HttpStatus> saveNewCheck(@RequestBody @Valid CheckPackDTO checkPackDTO) {
         checkService.save(checkPackDTO);
         return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<ClientErrorResponse> handlerException(CheckNotCreatedException e) {
-        ClientErrorResponse response = new ClientErrorResponse(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<ClientErrorResponse> handlerException(CardNotFoundException e) {
-        ClientErrorResponse response = new ClientErrorResponse(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 }

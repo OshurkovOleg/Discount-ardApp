@@ -78,6 +78,7 @@ public class CheckService {
         }
 
         long points = sumPositions - checkDTO.getPrice();
+
         if (points != 0) {
             long newBalanceValue = clientEntity.getCardBalance() - points;
             clientEntity.setCardBalance(newBalanceValue);
@@ -122,5 +123,6 @@ public class CheckService {
                 .forEach(positionFromCheckService::save);
 
         checkRepository.save(checkEntity);
+
     }
 }
