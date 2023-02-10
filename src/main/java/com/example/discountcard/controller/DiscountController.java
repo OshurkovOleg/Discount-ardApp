@@ -6,27 +6,22 @@ import com.example.discountcard.services.CheckService;
 import com.example.discountcard.services.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 @Api(description = "Главный контроллер")
 public class DiscountController {
+
     private final ClientService clientService;
     private final CheckService checkService;
 
-
-    @Autowired
-    public DiscountController(ClientService clientService, CheckService checkService) {
-        this.clientService = clientService;
-        this.checkService = checkService;
-    }
 
     @GetMapping("clients/all")
     @ApiOperation("Получить карты всех клиентов")
@@ -42,7 +37,7 @@ public class DiscountController {
 
     @PostMapping("/checks")
     @ApiOperation("Сохранение входящего чека в БД")
-    public ResponseEntity<HttpStatus> saveNewCheck(@RequestBody @Valid CheckPackDTO checkPackDTO) {
+    public ResponseEntity<HttpStatus> saveNewCheck(@RequestBody CheckPackDTO checkPackDTO) {
         checkService.save(checkPackDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }

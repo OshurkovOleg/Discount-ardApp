@@ -10,13 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
 public class ClientServiceTest {
 
     @Mock
@@ -25,6 +23,7 @@ public class ClientServiceTest {
     @InjectMocks
     ClientService clientService;
 
+    //TODO лишний
     @Test
     void shouldReturnAllClients() {
         ArrayList<ClientEntity> clients = createClients();

@@ -19,11 +19,10 @@ public class MapperObjectTest {
     void shouldGetCheckEntityFromCheckDTO() {
 
         CheckDTO checkDTO = new CheckDTO();
-        checkDTO.setNumber(1);
+        checkDTO.setNumber(1L);
         checkDTO.setPrice(1000);
         checkDTO.setCardNumber(923472100);
         checkDTO.setListPosition(new ArrayList<>());
-
 
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setId(20);
@@ -37,15 +36,13 @@ public class MapperObjectTest {
         Assertions.assertNotNull(result.getClientEntity());
         Assertions.assertEquals(checkDTO.getPrice(), result.getPrice());
         Assertions.assertEquals(checkDTO.getNumber(), result.getNumber());
-
-
     }
 
     @Test
     void shouldGetNewClientEntityUsingCardNumberFromCheckDTO() {
 
         CheckDTO checkDTO = new CheckDTO();
-        checkDTO.setNumber(2);
+        checkDTO.setNumber(2L);
         checkDTO.setPrice(2000);
         checkDTO.setCardNumber(223498122);
         checkDTO.setListPosition(new ArrayList<>());

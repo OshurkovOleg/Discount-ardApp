@@ -1,7 +1,6 @@
 package com.example.discountcard.constants;
 
 public class Constants {
-    public static final String CHECKING_THE_CARD_IN_THE_CLIENT_SERVICE = "checking the card in the client service";
-    public static final String THE_CARD_NUMBER_CANNOT_BE_NEGATIVE = "The card number cannot be negative";
-    public static final String CHECK_NOT_CREATED = "Failed to create check";
+    public static final String CARD_NOT_FOUND = "ClientService.get didn't exist";
+    public static final String CHECK_NOT_CREATED = "check not created, number is null";
 }

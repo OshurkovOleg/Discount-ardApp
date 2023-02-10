@@ -29,38 +29,38 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class DiscountControllerTest {
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    public DiscountControllerTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+    }
 
     @Test
     public void testGetAllClients_ShouldReturnAllClientFromTableClient() throws Exception {
         mockMvc.perform(get("/api/clients/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("231")));
+                .andExpect(content().string(containsString("35454")));
     }
 
     @Test
     public void testGetClient_ShouldReturnClientFromTableClient_WhenRequestByNumberCard() throws Exception {
-        mockMvc.perform(get("/api/clients/23499921"))
+        mockMvc.perform(get("/api/clients/35454"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("23499921")));
+                .andExpect(content().string(containsString("35454")));
     }
 
     @Test
     public void testSaveNewCheck_ShouldSaveNewCheckInBD() throws Exception {
 
-        File file = new File("src/test/resources/check.json");
+        File file = new File("src/test/resources/endpoint.checks/check.json");
+
         CheckPackDTO checkPackDTO = objectMapper.readValue(file, CheckPackDTO.class);
-
-
         String checkPost = objectMapper.writeValueAsString(checkPackDTO);
-
 
         mockMvc.perform(post("/api/checks")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -69,6 +69,8 @@ class DiscountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
+
+        //TODO проверить get-ом на обновление данных в базе
     }
 
 }

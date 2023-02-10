@@ -1,5 +1,6 @@
 package com.example.discountcard.services;
 
+import com.example.discountcard.constants.Constants;
 import com.example.discountcard.entities.ClientEntity;
 import com.example.discountcard.exceptions.CardNotFoundException;
 import com.example.discountcard.repository.ClientRepository;
@@ -29,7 +30,7 @@ public class ClientService {
     public ClientEntity getByCardNumber(long card) {
 
         if (clientRepository.getClientByCardNumber(card) == null) {
-            throw new CardNotFoundException("ClientService.get didn't exist");
+            throw new CardNotFoundException(Constants.CARD_NOT_FOUND);
         }
         return clientRepository.getClientByCardNumber(card);
     }

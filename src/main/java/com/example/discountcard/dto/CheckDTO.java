@@ -4,7 +4,9 @@ import com.example.discountcard.entities.PositionFromCheckEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -12,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class CheckDTO {
 
-    private long number;
+    //TODO  @NonNull Valid
+//    @NotNull
+    private Long number;
     private long cardNumber;
     private long price;
     private List<PositionFromCheckEntity> listPosition;

@@ -1,11 +1,13 @@
 package com.example.discountcard.services;
 
+import com.example.discountcard.constants.Constants;
 import com.example.discountcard.dto.CheckDTO;
 import com.example.discountcard.dto.CheckPackDTO;
 import com.example.discountcard.dto.ClientDTO;
 import com.example.discountcard.entities.CheckEntity;
 import com.example.discountcard.entities.ClientEntity;
 import com.example.discountcard.entities.PositionFromCheckEntity;
+import com.example.discountcard.exceptions.CheckNotCreatedException;
 import com.example.discountcard.mappers.MapperObject;
 import com.example.discountcard.repository.CheckRepository;
 import com.example.discountcard.repository.ClientRepository;
@@ -36,6 +38,11 @@ public class CheckService {
 
 // идем по списку входящих чеков
         for (CheckDTO checkDTO : checkPackDTO.getCheckList()) {
+
+            if(checkDTO.getNumber() == null) {
+                throw new CheckNotCreatedException(Constants.CHECK_NOT_CREATED);
+            }
+
             ClientEntity clientEntity = clientRepository.getClientByCardNumber(checkDTO.getCardNumber());
 
 //проверяем есть ли клиент в базе, если нет, то добавляем и сохраняем чек - иначе просто сохраняем чек
